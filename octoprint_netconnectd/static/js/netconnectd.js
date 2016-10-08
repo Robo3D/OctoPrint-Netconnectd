@@ -44,12 +44,12 @@ $(function() {
             var text;
 
             if (self.error()) {
-                text = gettext("Error while talking to netconnectd, is the service running?");
+                text = gettext("Error while talking to netconnectd, is the service running?  If you're not sure, restart Octoprint");
             } else if (self.status.connections.ap()) {
-                text = gettext("Acting as access point");
+                text = gettext("Acting as a WiFi hotspot");
             } else if (self.status.link()) {
                 if (self.status.connections.wired()) {
-                    text = gettext("Connected via wire");
+                    text = gettext("Connected via ethernet");
                 } else if (self.status.connections.wifi()) {
                     if (self.status.wifi.current_ssid()) {
                         text = _.sprintf(gettext("Connected via wifi (SSID \"%(ssid)s\")"), {ssid: self.status.wifi.current_ssid()});
