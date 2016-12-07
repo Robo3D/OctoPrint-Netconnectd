@@ -231,7 +231,24 @@ class NetconnectdSettingsPlugin(octoprint.plugin.SettingsPlugin,
 
 		finally:
 			sock.close()
+	
+	##~~ Softwareupdate hook
+	def get_update_information(self):
+        	return dict(
+            		netconnectd=dict(
+                		displayName="net connected",
+                		displayVersion=self._plugin_version,
 
+                		# version check: github repository
+                		type="github_release",
+                		user="Robo3D",
+                		repo="OctoPrint-Netconnectd",
+                		current=self._plugin_version,
+
+                		# update method: pip w/ dependency links
+                		pip="https://github.com/Robo3D/OctoPrint-Netconnectd/archive/{target_version}.zip"
+            )
+        )
 __plugin_name__ = "Netconnectd Client"
 
 def __plugin_check__():
@@ -247,6 +264,12 @@ def __plugin_load__():
 	# called if the OS check above was successful
 	global __plugin_implementation__
 	__plugin_implementation__ = NetconnectdSettingsPlugin()
+	
+	global __plugin_hooks__
+	__plugin_hooks__ = {
+        	"octoprint.plugin.softwareupdate.check_config": __plugin_implementation__.get_update_information
+	}
+	
 	return True
 
 
