@@ -96,6 +96,7 @@ class NetconnectdSettingsPlugin(octoprint.plugin.SettingsPlugin,
 			if data["psk"]:
 				self._logger.info("Configuring wifi {ssid} and psk...".format(**data))
 			else:
+                data['psk'] = ''
 				self._logger.info("Configuring wifi {ssid}...".format(**data))
 
 			self._configure_and_select_wifi(data["ssid"], data["psk"], force=data["force"] if "force" in data else False)
@@ -231,7 +232,7 @@ class NetconnectdSettingsPlugin(octoprint.plugin.SettingsPlugin,
 
 		finally:
 			sock.close()
-	
+
 	##~~ Softwareupdate hook
 	def get_update_information(self):
         	return dict(
@@ -264,13 +265,10 @@ def __plugin_load__():
 	# called if the OS check above was successful
 	global __plugin_implementation__
 	__plugin_implementation__ = NetconnectdSettingsPlugin()
-	
+
 	global __plugin_hooks__
 	__plugin_hooks__ = {
         	"octoprint.plugin.softwareupdate.check_config": __plugin_implementation__.get_update_information
 	}
-	
+
 	return True
-
-
-
