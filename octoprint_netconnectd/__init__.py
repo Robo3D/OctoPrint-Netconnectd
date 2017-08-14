@@ -94,7 +94,8 @@ class NetconnectdSettingsPlugin(octoprint.plugin.SettingsPlugin,
             return make_response("Insufficient rights", 403)
 
         if command == "configure_wifi":
-            if data["psk"]:
+            psk = data.get('psk',None)
+            if psk:
                 self._logger.info("Configuring wifi {ssid} and psk...".format(**data))
             else:
                 data['psk'] = ''
