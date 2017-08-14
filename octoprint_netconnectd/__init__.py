@@ -13,6 +13,7 @@ import octoprint.plugin
 
 from octoprint.server import admin_permission
 
+
 class NetconnectdSettingsPlugin(octoprint.plugin.SettingsPlugin,
                                 octoprint.plugin.TemplatePlugin,
                                 octoprint.plugin.SimpleApiPlugin,
@@ -33,7 +34,7 @@ class NetconnectdSettingsPlugin(octoprint.plugin.SettingsPlugin,
 			import socket
 			return socket.gethostname() + ".local"
 
-	##~~ SettingsPlugin
+	# ~~ SettingsPlugin
 
 	def on_settings_save(self, data):
 		octoprint.plugin.SettingsPlugin.on_settings_save(self, data)
@@ -46,14 +47,14 @@ class NetconnectdSettingsPlugin(octoprint.plugin.SettingsPlugin,
 			timeout=10
 		)
 
-	##~~ TemplatePlugin API
+	# ~~ TemplatePlugin API
 
 	def get_template_configs(self):
 		return [
 			dict(type="settings", name="Network connection")
 		]
 
-	##~~ SimpleApiPlugin API
+	# ~~ SimpleApiPlugin API
 
 	def get_api_commands(self):
 		return dict(
@@ -113,7 +114,7 @@ class NetconnectdSettingsPlugin(octoprint.plugin.SettingsPlugin,
 		elif command == "stop_ap":
 			self._stop_ap()
 
-	##~~ AssetPlugin API
+	# ~~ AssetPlugin API
 
 	def get_assets(self):
 		return dict(
@@ -122,7 +123,7 @@ class NetconnectdSettingsPlugin(octoprint.plugin.SettingsPlugin,
 			less=["less/netconnectd.less"]
 		)
 
-	##~~ Private helpers
+	# ~~ Private helpers
 
 	def _get_wifi_list(self, force=False):
 		payload = dict()
@@ -233,7 +234,7 @@ class NetconnectdSettingsPlugin(octoprint.plugin.SettingsPlugin,
 		finally:
 			sock.close()
 
-	##~~ Softwareupdate hook
+	# ~~ Softwareupdate hook
 	def get_update_information(self):
         	return dict(
             		netconnectd=dict(
